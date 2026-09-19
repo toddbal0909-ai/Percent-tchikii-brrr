@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0A0A0A">
+<title>Le Percent</title>
+<meta name="description" content="Compte à rebours, infos pratiques, inscriptions et photos de la soirée des 100 jours.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --noir:#0A0A0A;
+  --gris:#EDEDED;
+  --blanc:#FFFFFF;
+  --display:"Archivo","Arial Black",system-ui,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font:400 1.0625rem/1.55 var(--body);color:var(--noir);background:#fff;-webkit-text-size-adjust:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--noir);outline-offset:3px}
+.on-dark :focus-visible,dialog :focus-visible{outline-color:#fff}
+.wrap{width:min(100% - 2.5rem,68rem);margin-inline:auto}
+h1,h2{font-family:var(--display)}
+h2{font-weight:800;font-stretch:112%;font-size:clamp(2rem,6.5vw,3.25rem);line-height:1.02;letter-spacing:-.01em}
+.lead{max-width:34rem;margin-top:1rem}
+
+/* boutons */
+.btn{display:inline-block;font:700 1rem/1.2 var(--body);padding:.9rem 1.4rem;border-radius:.6rem;background:var(--noir);color:var(--blanc);border:2px solid var(--noir);text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--noir)}
+.on-dark .btn,dialog .btn{background:var(--blanc);color:var(--noir);border-color:var(--blanc)}
+.on-dark .btn.ghost,dialog .btn.ghost{background:transparent;color:var(--blanc)}
+.btn:active{transform:translateY(1px)}
+
+/* accueil */
+.hero{background:var(--noir);color:#fff;padding-block:1.25rem 4rem}
+.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.top h1{font-weight:900;font-stretch:125%;font-size:1.35rem;line-height:1}
+.top nav{display:flex;gap:1.25rem;font-weight:500}
+.top nav a{text-decoration:none;padding:.4rem 0;border-bottom:2px solid transparent}
+.top nav a:hover{border-color:var(--blanc)}
+.hero-body{display:grid;gap:2rem;margin-top:3rem}
+@media (min-width:56rem){.hero-body{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:end;gap:4rem}}
+.pct{display:flex;align-items:baseline;font-family:var(--display);font-weight:900;font-stretch:125%;font-size:clamp(6rem,30vw,15rem);line-height:.85;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.pct.full{font-size:clamp(5rem,20vw,11rem)}
+.pct .sign{font-size:.55em;margin-left:.06em;color:transparent;-webkit-text-stroke:.03em var(--blanc)}
+.phrase{font:700 clamp(1.4rem,4vw,2rem)/1.15 var(--display)}
+.count{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem;margin-top:1.25rem;max-width:28rem}
+.u{border:2px solid rgba(255,255,255,.5);border-radius:.6rem;padding:.6rem .6rem .5rem}
+.n{display:block;font:800 clamp(1.6rem,6vw,2.2rem)/1 var(--display);font-stretch:112%;font-variant-numeric:tabular-nums}
+.l{font-size:.85rem;opacity:.9}
+.count-cap{margin-top:.6rem;font-size:.9rem;opacity:.9}
+.actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
+.bar{height:1.25rem;margin-top:2.5rem;background:rgba(255,255,255,.22);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--blanc);border-radius:inherit;transition:width 1.4s cubic-bezier(.2,.7,.2,1)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+.bar-cap{display:flex;justify-content:space-between;gap:1rem;margin-top:.5rem;font-size:.9rem;opacity:.9}
+
+/* sections */
+.sec{padding-block:5rem}
+.split{display:grid;gap:2.5rem}
+@media (min-width:56rem){.split{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:4rem}}
+.infos{display:grid;gap:.75rem}
+@media (min-width:34rem){.infos{grid-template-columns:1fr 1fr}}
+.infos div{padding:1.1rem 1.25rem;background:#F5F5F5;border-radius:.8rem}
+.infos .wide{grid-column:1/-1}
+.infos .inv{background:var(--blanc);box-shadow:inset 0 0 0 2px var(--noir)}
+.infos dt{font-size:.95rem;font-weight:700;margin-bottom:.35rem}
+.infos dd{margin:0;font:700 clamp(1.3rem,4.5vw,1.75rem)/1.15 var(--display)}
+.infos-actions{margin-top:1.5rem}
+
+/* inscription */
+.sec.pink{background:var(--gris)}
+.form{display:grid;gap:1rem}
+.row{display:grid;gap:1rem}
+@media (min-width:34rem){.row{grid-template-columns:1fr 1fr}}
+label{display:grid;gap:.35rem;font-weight:700}
+label .opt{font-weight:400}
+input,select,textarea{width:100%;font:inherit;font-weight:400;color:inherit;padding:.8rem .9rem;border:2px solid var(--noir);border-radius:.5rem;background:#fff}
+textarea{min-height:5.5rem;resize:vertical}
+.total{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1rem 0 .25rem;margin-top:.5rem;border-top:2px solid var(--noir)}
+.total output{font:800 2rem/1 var(--display);font-stretch:112%}
+.pay{font-size:.95rem}
+.status{min-height:1.5rem;font-weight:500}
+.status.err{color:#B3122D}
+
+/* galerie */
+.grid{list-style:none;padding:0;margin-top:2rem;columns:2 11rem;column-gap:.75rem}
+.grid li{break-inside:avoid;margin-bottom:.75rem}
+.grid button{all:unset;display:block;width:100%;border-radius:.5rem;overflow:hidden;cursor:zoom-in}
+.grid button:focus-visible{outline:3px solid var(--noir);outline-offset:3px}
+.grid img{display:block;width:100%;height:auto}
+.empty{margin-top:2rem;padding:2rem;border:2px dashed var(--noir);border-radius:.8rem;max-width:36rem}
+.empty p+p{margin-top:.75rem}
+
+dialog{border:0;padding:1rem;background:transparent;color:#fff;width:min(100vw - 1rem,60rem);max-width:none;margin:auto}
+dialog::backdrop{background:rgba(10,10,10,.94)}
+dialog img{display:block;max-width:100%;max-height:74vh;margin:0 auto;border-radius:.5rem}
+dialog figcaption{margin-top:.75rem;text-align:center}
+.lb-bar{display:flex;justify-content:center;gap:.6rem;margin-top:1rem;flex-wrap:wrap}
+
+/* pied de page */
+.foot{background:var(--noir);color:#fff;padding-block:3.5rem}
+.foot p{font:700 clamp(1.3rem,4vw,1.9rem)/1.2 var(--display);max-width:40rem}
+</style>
+</head>
+<body id="top">
+
+<header class="hero on-dark">
+  <div class="wrap">
+    <div class="top">
+      <h1>Le Percent</h1>
+      <nav aria-label="Navigation">
+        <a href="#soiree">La soirée</a>
+        <a href="#inscription">Inscription</a>
+        <a href="#photos">Photos</a>
+      </nav>
+    </div>
+
+    <div class="hero-body">
+      <div class="pct" aria-hidden="true"><span id="pctNum">0</span><span class="sign">%</span></div>
+      <div>
+        <p class="phrase" id="phrase">Le percent arrive.</p>
+        <div class="count" role="timer" aria-label="Compte à rebours">
+          <div class="u"><span class="n" id="cd">0</span><span class="l">jours</span></div>
+          <div class="u"><span class="n" id="ch">0</span><span class="l">heures</span></div>
+          <div class="u"><span class="n" id="cm">0</span><span class="l">minutes</span></div>
+          <div class="u"><span class="n" id="cs">0</span><span class="l">secondes</span></div>
+        </div>
+        <p class="count-cap" id="cLabel"></p>
+        <div class="actions">
+          <a class="btn" href="#inscription">Réserver ma place</a>
+          <a class="btn ghost" href="#soiree">Voir les infos</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar" id="bar" role="progressbar" aria-label="Avancement vers le percent" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="barFill"></i></div>
+    <div class="bar-cap"><span>Début de l'année</span><span>Le percent</span></div>
+    <noscript><p style="margin-top:1rem">Active JavaScript pour voir le compte à rebours.</p></noscript>
+  </div>
+</header>
+
+<main>
+  <section class="sec" id="soiree" aria-labelledby="t-soiree">
+    <div class="wrap split">
+      <div>
+        <h2 id="t-soiree">La soirée</h2>
+        <p class="lead">Cent jours avant les épreuves, on se retrouve pour souffler ensemble. Voilà tout ce qu'il faut savoir.</p>
+        <div class="infos-actions"><button class="btn ghost" type="button" id="ics">Ajouter à mon agenda</button></div>
+      </div>
+      <dl class="infos">
+        <div class="wide"><dt>Date</dt><dd data-cfg="date"></dd></div>
+        <div><dt>Horaires</dt><dd data-cfg="horaires"></dd></div>
+        <div><dt>Prix</dt><dd data-cfg="prixTexte"></dd></div>
+        <div class="wide"><dt>Lieu</dt><dd data-cfg="lieu"></dd></div>
+        <div class="wide inv"><dt>Tenue</dt><dd data-cfg="tenue"></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec pink" id="inscription" aria-labelledby="t-insc">
+    <div class="wrap split">
+      <div>
+        <h2 id="t-insc">Réserve ta place</h2>
+        <p class="lead">Remplis le formulaire, on s'occupe du reste. Tu peux réserver jusqu'à <span data-cfg="placesMax"></span> places à ton nom.</p>
+      </div>
+      <form class="form" id="form" name="percent" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="percent">
+        <div class="row">
+          <label>Prénom <input name="prenom" autocomplete="given-name" required></label>
+          <label>Nom <input name="nom" autocomplete="family-name" required></label>
+        </div>
+        <div class="row">
+          <label>Classe <input name="classe" required></label>
+          <label>Nombre de places <select name="places" id="places"></select></label>
+        </div>
+        <label>Un mot pour l'équipe <span class="opt">(facultatif)</span> <textarea name="message"></textarea></label>
+        <div class="total"><span>Total à régler</span><output id="total" for="places">—</output></div>
+        <p class="pay" data-cfg="paiement"></p>
+        <div><button class="btn" type="submit">Envoyer mon inscription</button></div>
+        <p class="status" id="status" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec" id="photos" aria-labelledby="t-photos">
+    <div class="wrap">
+      <h2 id="t-photos">Photos</h2>
+      <p class="lead">Les souvenirs de la classe, de la seconde à aujourd'hui.</p>
+      <ul class="grid" id="grid"></ul>
+      <div class="empty" id="empty" hidden>
+        <p><strong>Les photos arrivent bientôt.</strong></p>
+        <p>Tu en as une à partager ? <a id="sendPhotos" href="#">Envoie-la par mail</a>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot on-dark">
+  <div class="wrap">
+    <p id="examLine">Après le percent, il reste les épreuves.</p>
+  </div>
+</footer>
+
+<dialog id="lb" aria-label="Photo agrandie">
+  <figure>
+    <img id="lbImg" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+  <div class="lb-bar">
+    <button class="btn ghost" type="button" id="prev">Précédente</button>
+    <button class="btn ghost" type="button" id="next">Suivante</button>
+    <button class="btn" type="button" id="close">Fermer</button>
+  </div>
+</dialog>
+
+<script>
+(() => {
+  /* ============ À MODIFIER ============ */
+  const CONFIG = {
+    debut:         "2026-09-01T08:00:00", // rentrée = 0 %
+    datePercent:   "2027-03-06T21:00:00", // début de la soirée = 100 %
+    finSoiree:     "2027-03-07T02:00:00",
+    dateEpreuves:  "2027-06-15T08:00:00", // début des épreuves (à confirmer)
+    lieu:          "Nom du lieu, ville",
+    tenue:         "Noir, blanc, ou noir et blanc",
+    prix:          10,                    // en euros, 0 = gratuit
+    placesMax:     4,
+    paiement:      "Règlement en espèces ou par chèque auprès des délégués de classe.",
+    email:         "contact@exemple.fr",
+    mode:          "mailto"               // "mailto" (partout) ou "netlify" (si hébergé sur Netlify)
+  };
+  // Photos : mets les fichiers à côté de index.html, puis liste-les ici
+  const PHOTOS = [
+    // { src: "photo-01.jpg", alt: "La classe au ski, en seconde" },
+  ];
+  /* ================================== */
+
+  const $ = s => document.querySelector(s);
+  const t0 = new Date(CONFIG.debut), tP = new Date(CONFIG.datePercent),
+        tEnd = new Date(CONFIG.finSoiree), tE = new Date(CONFIG.dateEpreuves);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const jours = n => n > 1 ? "jours" : "jour";
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  const dFmt = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  const hFmt = d => new Intl.DateTimeFormat("fr-FR", { hour: "2-digit", minute: "2-digit" }).format(d).replace(":", " h ");
+
+  /* textes issus de CONFIG */
+  const TXT = {
+    date: cap(dFmt.format(tP)),
+    horaires: "De " + hFmt(tP) + " à " + hFmt(tEnd),
+    lieu: CONFIG.lieu,
+    tenue: CONFIG.tenue,
+    prixTexte: CONFIG.prix ? CONFIG.prix + "\u00a0€ par personne" : "Gratuit",
+    paiement: CONFIG.paiement,
+    placesMax: CONFIG.placesMax
+  };
+  document.querySelectorAll("[data-cfg]").forEach(el => { el.textContent = TXT[el.dataset.cfg]; });
+
+  /* progression */
+  const target = Math.max(0, Math.min(100, (Date.now() - t0) / (tP - t0) * 100));
+  const num = $("#pctNum"), box = $(".pct"), bar = $("#bar"), fill = $("#barFill");
+  const showPct = v => {
+    const n = Math.floor(v);
+    num.textContent = n;
+    box.classList.toggle("full", n >= 100);
+    bar.setAttribute("aria-valuenow", n);
+  };
+  if (reduce) {
+    showPct(target); fill.style.width = target + "%";
+  } else {
+    setTimeout(() => { fill.style.width = target + "%"; }, 60);
+    const start = performance.now();
+    const step = t => {
+      const k = Math.min(1, (t - start) / 1400);
+      showPct(target * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  /* compte à rebours */
+  function tick() {
+    const now = new Date();
+    const cible = now < tP ? tP : tE;
+    let s = Math.max(0, Math.floor((cible - now) / 1000));
+    const d = Math.floor(s / 86400); s %= 86400;
+    const h = Math.floor(s / 3600);  s %= 3600;
+    const m = Math.floor(s / 60);    s %= 60;
+    $("#cd").textContent = d; $("#ch").textContent = h;
+    $("#cm").textContent = m; $("#cs").textContent = s;
+    if (now < tP) {
+      $("#phrase").textContent = d === 0 ? "Le percent, c'est dans moins de 24 heures."
+                                         : "Le percent, c'est dans " + d + " " + jours(d) + ".";
+      $("#cLabel").textContent = "Compte à rebours jusqu'à la soirée";
+    } else if (now < tE) {
+      $("#phrase").textContent = "Le percent a eu lieu. Les épreuves commencent dans " + d + " " + jours(d) + ".";
+      $("#cLabel").textContent = "Compte à rebours jusqu'aux épreuves";
+    } else {
+      $("#phrase").textContent = "Les épreuves ont commencé. Bon courage à tous.";
+      $("#cLabel").textContent = "";
+    }
+    const reste = Math.ceil((tE - now) / 864e5);
+    $("#examLine").textContent = reste > 0
+      ? "Les épreuves commencent dans " + reste + " " + jours(reste) + ". D'ici là, profite."
+      : "Bon courage pour les épreuves.";
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* agenda */
+  $("#ics").addEventListener("click", () => {
+    const f = d => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    const txt = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Le Percent//FR", "BEGIN:VEVENT",
+      "UID:percent-" + f(tP) + "@percent", "DTSTAMP:" + f(new Date()), "DTSTART:" + f(tP), "DTEND:" + f(tEnd),
+      "SUMMARY:Le Percent", "LOCATION:" + CONFIG.lieu, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([txt], { type: "text/calendar" }));
+    a.download = "le-percent.ics";
+    a.click();
+  });
+
+  /* inscription */
+  const form = $("#form"), sel = $("#places"), total = $("#total"), status = $("#status");
+  for (let i = 1; i <= CONFIG.placesMax; i++) sel.add(new Option(i + (i > 1 ? " places" : " place"), i));
+  const majTotal = () => { total.textContent = CONFIG.prix ? (+sel.value * CONFIG.prix) + "\u00a0€" : "Gratuit"; };
+  sel.addEventListener("change", majTotal); majTotal();
+  const dire = (msg, err) => { status.textContent = msg; status.classList.toggle("err", !!err); };
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const f = Object.fromEntries(new FormData(form));
+    if (CONFIG.mode === "netlify") {
+      try {
+        const r = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(new FormData(form)).toString() });
+        if (!r.ok) throw new Error("envoi");
+        form.reset(); majTotal();
+        dire("C'est envoyé. Ta place est confirmée dès que tu as réglé.");
+      } catch {
+        dire("L'envoi a échoué. Réessaie dans un instant.", true);
+      }
+    } else {
+      const corps = ["Inscription au percent", "Nom : " + f.prenom + " " + f.nom, "Classe : " + f.classe,
+        "Places : " + f.places, "Total : " + total.textContent, "Message : " + (f.message || "-")].join("\n");
+      location.href = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent("Inscription au percent") +
+        "&body=" + encodeURIComponent(corps);
+      dire("Ton application mail s'ouvre avec le message prêt. Envoie-le pour valider ton inscription.");
+    }
+  });
+
+  /* galerie */
+  const grid = $("#grid"), lb = $("#lb"), lbImg = $("#lbImg"), lbCap = $("#lbCap");
+  let cur = 0;
+  $("#sendPhotos").href = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent("Photo pour le site du percent");
+  const voir = i => {
+    cur = (i + PHOTOS.length) % PHOTOS.length;
+    lbImg.src = PHOTOS[cur].src; lbImg.alt = PHOTOS[cur].alt; lbCap.textContent = PHOTOS[cur].alt;
+    if (!lb.open) lb.showModal();
+  };
+  if (!PHOTOS.length) {
+    grid.hidden = true; $("#empty").hidden = false;
+  } else {
+    PHOTOS.forEach((p, i) => {
+      const li = document.createElement("li"), b = document.createElement("button"), im = new Image();
+      b.type = "button"; b.setAttribute("aria-label", "Agrandir : " + p.alt);
+      im.src = p.src; im.alt = p.alt; im.loading = "lazy";
+      b.append(im); b.addEventListener("click", () => voir(i));
+      li.append(b); grid.append(li);
+    });
+  }
+  $("#prev").addEventListener("click", () => voir(cur - 1));
+  $("#next").addEventListener("click", () => voir(cur + 1));
+  $("#close").addEventListener("click", () => lb.close());
+  lb.addEventListener("click", e => { if (e.target === lb) lb.close(); });
+  lb.addEventListener("keydown", e => {
+    if (e.key === "ArrowLeft") voir(cur - 1);
+    if (e.key === "ArrowRight") voir(cur + 1);
+  });
+})();
+</script>
+</body>
+</html>
